@@ -37,14 +37,10 @@ db = SQL("sqlite:///dbase.db")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if not session:
-        user = [""]
-    else:
-        user = db.execute("SELECT username FROM users WHERE id=?", session["user_id"])
     if request.method == "GET":
         events = db.execute("SELECT * FROM events")
         l = len(events)
-        return render_template("index.html", events=events, l=l, user=user[0])
+        return render_template("index.html", events=events, l=l)
     else:
         ft = request.form.get("filter")
         if not ft:
@@ -53,14 +49,13 @@ def index():
         else:
             events = db.execute("SELECT * FROM events WHERE categ=?", ft.upper())
             l = len(events)
-            return render_template("index.html", events=events, l=l, user=user[0])
+            return render_template("index.html", events=events, l=l)
 
 @app.route("/addevent", methods=["GET", "POST"])
 @login_required
 def addevent():
-    user = db.execute("SELECT username FROM users WHERE id=?", session["user_id"])
     if request.method == "GET":
-        return render_template("addevent.html", user=user[0])
+        return render_template("addevent.html")
     else:
         dt = date.today()
         ename = request.form.get("event")
@@ -77,9 +72,8 @@ def addevent():
 @app.route("/delevent", methods=["GET", "POST"])
 @login_required
 def delevent():
-    user = db.execute("SELECT username FROM users WHERE id=?", session["user_id"])
     if request.method == "GET":
-        return render_template("delevent.html", events=db.execute("SELECT * FROM events WHERE user=?", session["user_id"]), user=user[0])
+        return render_template("delevent.html", events=db.execute("SELECT * FROM events WHERE user=?", session["user_id"]))
     else:
         event = request.form.get("event")
         db.execute("DELETE FROM events WHERE ename=?", event)
@@ -115,6 +109,8 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["username"] = (db.execute("SELECT username FROM users WHERE id=?", session["user_id"]))[0]["username"]
+        print(session["username"])
 
         # Redirect user to home page
         return redirect("/")
@@ -152,7 +148,7 @@ def register():
             db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", name,
                        hash)
             flash("User had been registered successfully!")
-            return redirect("/login")
+            return redirect("/")
 
 
 @app.route("/logout")
@@ -164,7 +160,7 @@ def logout():
 
     # Redirect user to login form
     flash("Logged out")
-    return redirect("/login")
+    return redirect("/")
 
 
 def errorhandler(e):
