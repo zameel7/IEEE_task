@@ -164,7 +164,7 @@ def logout():
 
     # Redirect user to login form
     flash("Logged out")
-    return redirect("/")
+    return redirect("/login")
 
 
 def errorhandler(e):
