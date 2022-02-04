@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete Event
+{% endblock %}
+
+{% block main %}
+
+
+            <form action="/delevent" method="post">
+                <div class="justify-center text-center">
+                    <select class="form-control" name="event">
+                        <option selected disabled>--SELECT--</option>
+                        {% for event in events %}
+                            <option>{{ event["ename"] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-warning">Delete Event</button>
+                </div>
+            </form>
+
+
+{% endblock %}

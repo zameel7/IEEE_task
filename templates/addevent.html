@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Event
+{% endblock %}
+
+{% block main %}
+
+
+            <div id="event-container" class="card col-md-6 mx-auto" style="color:white;">
+                <div class="card-body">
+                    <form action="/addevent" method="post">
+                      <div class="form-group col-sm-2 text-left">
+                        <label for="event">Event</label>
+                        <input type="name" class="form-control" id="event" name="event"  placeholder="Event Name">
+                      </div>
+                      <div class="form-group col-sm-2 text-left">
+                        <label for="categ">Category</label>
+                        <select class="form-control" id="categ" name="categ">
+                          <option disabled selected>--Select--</option>
+                          <option>EVENTS</option>
+                          <option>WORKSHOPS</option>
+                          <option>TALKS</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-2 text-left">
+                        <label for="dt">Date</label>
+                        <input type="date" class="form-control" id="dt" name="dt" placeholder="dd/mm/yyyy">
+                      </div>
+                      <div class="form-group col-sm-2 text-left">
+                        <label for="edesc">Description</label>
+                        <textarea class="form-control" id="edesc" name="edesc" rows="3" style="vertical-align:top;" placeholder="Event Description"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-warning text-center">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+{% endblock %}

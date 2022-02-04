@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Events
+{% endblock %}
+
+{% block main %}
+            <form action="/" method="post">
+                   <div class="justify-center text-center">
+                    <select class="form-control" name="filter">
+                        <option selected disabled>All</option>
+                        <option >Events</option>
+                        <option>Workshops</option>
+                        <option>Talks</option>
+                    </select>
+                    <button type="submit" class="btn btn-warning">Filter</button>
+                </div>
+               </form>
+            {% if l==0 %}
+                <h3 class="text-warning text-center">Registered users can add events to the event-board</h3>
+           {% else %}
+                <br>
+                <div id="event-container" class="card-columns mx-auto shadow p-3 mb-5 rounded">
+
+
+                        {% for event in events %}
+                            <div class="event card text-dark p-3 mb-5 shadow-sm" style="max-width: 18rem;">
+                              <div class="card-body">
+                                <h4 class="card-title">{{ event["ename"] }}</h4>
+                                <h6 class="card-title">{{ event["edate"] }}</h6>
+                                <p class="card-text">{{ event["edesc"] }}</p>
+                              </div>
+                              <div class="card-footer">
+                                  <small class="text-muted">Posted on {{ event["dt"] }}</small>
+                              </div>
+
+                            </div>
+                        {% endfor %}
+
+                </div>
+             {% endif %}
+
+
+{% endblock %}
