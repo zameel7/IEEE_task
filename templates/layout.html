@@ -43,7 +43,7 @@
 
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="#"><button class="btn btn-outline-dark font-weight-bold text-warning">Hello, {{ user["username"] }}!</button></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><button class="btn btn-outline-dark font-weight-bold text-warning">Hello, {{ session["username"] }}!</button></a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout"><button type="button" class="btn btn-warning"><i class="fas fa-sign-out-alt"></i> Logout</button></a></li>
                     </ul>
                 {% else %}
